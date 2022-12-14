@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<server>
+   <featureManager>
+      <feature>enterpriseBeans-4.0</feature>
+      <feature>servlet-6.0</feature>
+      <feature>faces-4.0</feature>
+      <feature>persistence-3.1</feature>
+      <feature>mdb-4.0</feature>
+      <feature>messagingServer-3.0</feature>
+      <feature>messagingClient-3.0</feature>
+      <feature>cdi-4.0</feature>
+      <feature>websocket-2.1</feature>
+      <feature>concurrent-3.0</feature>
+      <feature>jsonp-2.1</feature>
+      <feature>jsonb-3.0</feature>
+      <feature>beanValidation-3.0</feature>
+      <feature>restfulWS-3.1</feature>
+      <feature>ssl-1.0</feature>
+   </featureManager>
+
+   <variable name="derby.lib" defaultValue="${shared.resource.dir}/DerbyLibs/derby-10.14.2.0.jar" />
+
+   <keyStore id="defaultKeyStore" password="yourPassword" />
+
+   <!--<logging traceSpecification="daytrader=fine"/>-->
+
+   <!-- allow reuse of 'busy' ports for fast server recycling on linux (where ports remain blocked for up to 2 mins after server stops) ${tradelite.http.port} set in bootstrap.properties -->
+   <httpEndpoint host="*" httpPort="${default.http.port}" httpsPort="${default.https.port}" id="defaultHttpEndpoint">
+      <tcpOptions soReuseAddr="true" />
+      <httpOptions maxKeepAliveRequests="-1" />
+   </httpEndpoint>
+  
+   <application location="io.openliberty.sample.daytrader10.war" type="war" context-root="/daytrader" />
+   
+   <!-- Derby Library Configuration -->    
+   <library id="derbyJDBCLib">
+     <file name="${derby.lib}" />
+   </library>
+   
+   <authData id="TradeDataSourceAuthData" password="db_password" user="db_username" />
+   <authData id="TradeAdminAuthData" password="db_password" user="db_username" />
+
+   <connectionManager agedTimeout="-1" connectionTimeout="0" id="conMgr1" maxIdleTime="-1" maxPoolSize="100" minPoolSize="100" purgePolicy="FailingConnectionOnly" reapTime="-1" />  
+   <dataSource connectionManagerRef="conMgr1" id="DefaultDataSource" isolationLevel="TRANSACTION_READ_COMMITTED"  jndiName="jdbc/TradeDataSource" statementCacheSize="60">
+      <jdbcDriver libraryRef="derbyJDBCLib" />
+      <properties.derby.embedded databaseName="${shared.resource.dir}/data/tradedb" password="db_password" user="db_username" />
+   </dataSource>
+   
+   <messagingEngine id="defaultME">
+      <queue id="TradeBrokerQueue" />
+      <topicSpace id="TradeTopicSpace" />
+   </messagingEngine>
+   
+   <connectionManager id="ConMgr2" maxPoolSize="20" />
+   <jmsQueueConnectionFactory connectionManagerRef="ConMgr2" jndiName="jms/TradeBrokerQCF">
+      <properties.wasJms />
+   </jmsQueueConnectionFactory>
+   
+   <connectionManager id="ConMgr3" maxPoolSize="20" />
+   <jmsTopicConnectionFactory connectionManagerRef="ConMgr3" jndiName="jms/TradeStreamerTCF">
+      <properties.wasJms />
+   </jmsTopicConnectionFactory> 
+   
+   <jmsQueue id="TradeBrokerQueue" jndiName="jms/TradeBrokerQueue">
+      <properties.wasJms deliveryMode="NonPersistent" queueName="TradeBrokerQueue" />
+   </jmsQueue>
+   
+   <jmsTopic id="TradeStreamerTopic" jndiName="jms/TradeStreamerTopic">
+      <properties.wasJms deliveryMode="NonPersistent" topicSpace="TradeTopicSpace" />
+   </jmsTopic>
+  
+  <jmsActivationSpec id="io.openliberty.sample.daytrader10/DTBroker3MDB">
+      <properties.wasJms destinationRef="TradeBrokerQueue" />
+   </jmsActivationSpec>
+   
+   <jmsActivationSpec id="io.openliberty.sample.daytrader10/DTStreamer3MDB">
+      <properties.wasJms destinationRef="TradeStreamerTopic" destinationType="jakarta.jms.Topic" />
+   </jmsActivationSpec>
+</server>
