@@ -8,8 +8,8 @@
    <properties>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
       <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-      <maven.compiler.source>11</maven.compiler.source>
-      <maven.compiler.target>11</maven.compiler.target>
+      <maven.compiler.source>17</maven.compiler.source>
+      <maven.compiler.target>17</maven.compiler.target>
       <!-- Derby library -->
       <version.derby>10.14.2.0</version.derby>
       <derby.path>${user.home}/.m2/repository/org/apache/derby/derby</derby.path>
