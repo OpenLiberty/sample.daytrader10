@@ -35,7 +35,7 @@
    
    <!-- Derby Library Configuration -->    
    <library id="derbyJDBCLib">
-      <fileset dir="${shared.resource.dir}/" includes="derby*.jar" />
+      <fileset dir="${shared.resource.dir}/DerbyLibs" includes="derby*.jar" />
    </library>
    
    <authData id="TradeDataSourceAuthData" password="db_password" user="db_username" />
