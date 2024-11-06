@@ -14,6 +14,7 @@
       <version.derby>10.14.2.0</version.derby>
       <derby.path>${user.home}/.m2/repository/org/apache/derby/derby</derby.path>
       <!-- Liberty configuration -->
+      <version.liberty-maven-plugin>3.7.1</version.liberty-maven-plugin>
       <testServerHttpPort>9080</testServerHttpPort>
       <testServerHttpsPort>9443</testServerHttpsPort>
    </properties>
@@ -48,18 +49,12 @@
       <!-- Enable liberty-maven plugin -->
       <plugins>
          <plugin>
-            <groupId>io.openliberty.tools</groupId>
-            <artifactId>liberty-maven-plugin</artifactId>
-            <version>3.3-M4</version>
-            <configuration>
-               <bootstrapProperties>
-                  <default.http.port>${testServerHttpPort}</default.http.port>
-                  <default.https.port>${testServerHttpsPort}</default.https.port>
-               </bootstrapProperties>
-               <install>
-                  <runtimeUrl>https://public.dhe.ibm.com/ibmdl/export/pub/software/openliberty/runtime/nightly/2022-10-19_0300/openliberty-all-22.0.0.12-cl221220221019-0300.zip</runtimeUrl>
-               </install>
-            </configuration>
+           <groupId>io.openliberty.tools</groupId>
+           <artifactId>liberty-maven-plugin</artifactId>
+           <version>${version.liberty-maven-plugin}</version>
+           <configuration>
+             <serverName>sampleAppServer</serverName>
+           </configuration>
          </plugin>
          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
