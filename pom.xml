@@ -56,9 +56,6 @@
                   <default.http.port>${testServerHttpPort}</default.http.port>
                   <default.https.port>${testServerHttpsPort}</default.https.port>
                </bootstrapProperties>
-               <install>
-                  <runtimeUrl>https://public.dhe.ibm.com/ibmdl/export/pub/software/openliberty/runtime/nightly/2022-10-19_0300/openliberty-all-22.0.0.12-cl221220221019-0300.zip</runtimeUrl>
-               </install>
             </configuration>
          </plugin>
          <plugin>

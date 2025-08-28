@@ -17,6 +17,7 @@ package com.ibm.websphere.samples.daytrader.web.prims;
 
 import java.io.IOException;
 
+import jakarta.inject.Inject;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -25,6 +26,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import com.ibm.websphere.samples.daytrader.impl.direct.TradeDirect;
+import com.ibm.websphere.samples.daytrader.interfaces.TradeJDBC;
 import com.ibm.websphere.samples.daytrader.util.Log;
 
 /**
@@ -40,6 +42,10 @@ public class PingServlet2DB extends HttpServlet {
     private static final long serialVersionUID = -6456675185605592049L;
     private static String initTime;
     private static int hitCount;
+
+    @Inject
+    @TradeJDBC
+    TradeDirect trade;
 
     /**
      * forwards post requests to the doGet method Creation date: (11/6/2000
@@ -74,7 +80,6 @@ public class PingServlet2DB extends HttpServlet {
         try {
             // TradeJDBC uses prepared statements so I am going to make use of
             // it's code.
-            TradeDirect trade = new TradeDirect();
             trade.getConnPublic();
 
             output.append("<html><head><title>PingServlet2DB.</title></head>"
