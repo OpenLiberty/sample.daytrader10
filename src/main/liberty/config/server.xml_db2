@@ -1,19 +1,20 @@
 <server>
     <featureManager>
         <feature>enterpriseBeans-4.0</feature>
-        <feature>servlet-5.0</feature>
-        <feature>faces-3.0</feature>
-        <feature>persistence-3.0</feature>
+        <feature>servlet-6.0</feature>
+        <feature>faces-4.0</feature>
+        <feature>pages-3.1</feature>
+        <feature>persistence-3.1</feature>
         <feature>mdb-4.0</feature>
         <feature>messagingServer-3.0</feature>
         <feature>messagingClient-3.0</feature>
-        <feature>cdi-3.0</feature>
-        <feature>websocket-2.0</feature>
-        <feature>concurrent-2.0</feature>
-        <feature>jsonp-2.0</feature>
-        <feature>jsonb-2.0</feature>
+        <feature>cdi-4.0</feature>
+        <feature>websocket-2.1</feature>
+        <feature>concurrent-3.0</feature>
+        <feature>jsonp-2.1</feature>
+        <feature>jsonb-3.0</feature>
         <feature>beanValidation-3.0</feature>
-        <feature>restfulWS-3.0</feature>
+        <feature>restfulWS-3.1</feature>
         <feature>ssl-1.0</feature>
     </featureManager>
 
